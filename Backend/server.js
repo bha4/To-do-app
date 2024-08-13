@@ -33,10 +33,9 @@ app.post('/todos',async (request,response)=>{
     catch(error){
         console.log(error)
         response.status(500).json({message: error.message});
-    }
-    
- 
+    } 
 })
+
 app.get("/todos",async (request,response)=>{
     try{
       const todos = await todoModel.find();
@@ -47,6 +46,27 @@ app.get("/todos",async (request,response)=>{
          response.status(500).json({ message: error.message });
     }
 })
+
+app.put("/todos/:id",async (request,response)=>{
+    try{
+    const { title, description } = request.body;
+    const id = request.params.id;
+    const updatedTodo = await todoModel.findByIdAndUpdate(
+        id,
+        {title, description},
+        { new:true }
+    )
+    if(!updatedTodo){
+        return response.status(404).json({message:"Todo not found.."})
+    }
+    response.json(updatedTodo)
+    }
+    catch(error){
+        console.log(error)
+    }
+
+})
+
 
 const PORT =3000;
 app.listen(PORT,()=>{
