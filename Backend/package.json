@@ -1,0 +1,14 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "make a to-do list that can create, edit, update and delete.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "BHARATHI S",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
