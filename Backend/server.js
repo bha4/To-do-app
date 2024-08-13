@@ -6,7 +6,6 @@ app.use(express.json())
 mongoose.connect("mongodb://localhost:27017/Mern-todo")
 .then(()=>{
     console.log("mangodb connected");
-    
 })
 .catch((err)=>{
     console.error(err)
@@ -64,7 +63,18 @@ app.put("/todos/:id",async (request,response)=>{
     catch(error){
         console.log(error)
     }
-
+})
+ 
+app.delete("/todos/:id",async (request,response)=>{
+    try{
+    const id = request.params.id;
+    await todoModel.findByIdAndDelete(id);
+    response.status(204).end()
+    }
+    catch(error){
+        console.log(error)
+         response.status(500).json({ message: error.message });
+    }
 })
 
 
