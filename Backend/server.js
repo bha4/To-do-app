@@ -1,24 +1,51 @@
 const express = require("express");
+const mongoose = require("mongoose")
 const app =express();
 app.use(express.json())
 
-let todos=[];
+mongoose.connect("mongodb://localhost:27017/Mern-todo")
+.then(()=>{
+    console.log("mangodb connected");
+    
+})
+.catch((err)=>{
+    console.error(err)
+})
 
-app.post('/todos',(request,response)=>{
+const todoSchema = new mongoose.Schema({
+    title:{
+        required : true,
+        type :String
+    },
+    description:String
+})
+
+const todoModel = mongoose.model("Todo",todoSchema)
+
+app.post('/todos',async (request,response)=>{
 
     const {title, description}=request.body
-    const newTodo ={
-        id:todos.length+1,
-        title,
-        description
-    };
-    todos.push(newTodo);
-    console.log(todos)
-    response.status(201).json(newTodo)
+    try{
+    const newTodo = new todoModel ({title,description})
+    await newTodo.save();
+    response.status(201).json(newTodo);
+    }
+    catch(error){
+        console.log(error)
+        response.status(500).json({message: error.message});
+    }
+    
  
 })
-app.get("/todos",(request,response)=>{
-    response.json(todos)
+app.get("/todos",async (request,response)=>{
+    try{
+      const todos = await todoModel.find();
+      response.json(todos)
+    }
+    catch(error){
+         console.log(error);
+         response.status(500).json({ message: error.message });
+    }
 })
 
 const PORT =3000;

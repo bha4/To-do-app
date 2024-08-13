@@ -2,13 +2,15 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "make a to-do list that can create, edit, update and delete.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "BHARATHI S",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "mongoose": "^8.5.2",
+    "nodemon": "^3.1.4"
   }
 }
